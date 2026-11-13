@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local credentials and settings
+.env
+.env.*
+!.env.example
+
+# Generated simulation data
+outputs/
+runs/
+checkpoints/
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/
