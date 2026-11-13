@@ -1,0 +1,15 @@
+---
+description: Architecture and Autoware interoperability requirements for all development
+alwaysApply: true
+---
+
+# Architecture requirements
+
+- Prefer reusing existing Autoware interfaces when their semantics fit. Before introducing a custom ROS interface, check the relevant Autoware and standard ROS interfaces against current official definitions and document why reuse is unsuitable.
+- Keep domain algorithms independent of ROS transport, simulator APIs, and hardware SDKs. Convert messages at integration boundaries.
+- Separate terrain representation, perception/pile estimation, pass planning, simulation, execution, and evaluation into cohesive modules with explicit contracts.
+- Keep interfaces explicit about units, coordinate frames, timestamps, uncertainty, and errors. Define ownership of shared data; avoid mutable global state.
+- Keep simulation and real hardware behind replaceable adapters. For example, a pile estimator should consume domain observations rather than import a specific simulator or ROS node.
+- Design for growing map sizes, sensor counts, and processing rates: make resolution, bounds, queues, and resource limits configurable; support incremental processing where justified.
+- Favor a small modular baseline. Add concurrency, distributed deployment, and abstractions when requirements or measurements justify them.
+- Document meaningful interface changes, dependency direction, and architecture tradeoffs. Verify module contracts and end-to-end behavior as functionality is added.

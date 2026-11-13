@@ -30,3 +30,13 @@ The brief proposes treating real-world Trimble blade control as an external syst
 7. Optional path tracking and reinforcement-learning experiments.
 
 These are proposed milestones, not completed capabilities. Simulation results will require calibration and real-world validation before vehicle use.
+
+## Architecture principles
+
+- Reuse compatible Autoware interfaces wherever practical; justify custom interfaces when existing semantics do not fit.
+- Keep estimation, planning, simulation, execution, and evaluation modular, with explicit contracts and dependencies.
+- Keep core algorithms independent of ROS, simulator, and hardware integrations through replaceable adapters.
+- Make resource limits and map resolution configurable so the system can scale as workloads grow.
+- Start with a small modular baseline and justify added complexity with requirements or measurements.
+
+These principles apply throughout development. See [development guidance](AGENTS.md).
