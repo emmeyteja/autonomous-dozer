@@ -15,6 +15,8 @@ def next_pass(terrain: Terrain, job: Job, blade: Blade, overlap=0.15) -> WorkPas
     Only +x cuts into an explicitly separate disposal area are implemented.
     This is material planning, not a collision-checked vehicle trajectory.
     """
+    if not isinstance(terrain, Terrain):
+        raise TypeError("next_pass requires explicit Terrain, not partial observations")
     if not math.isfinite(overlap) or not 0 <= overlap < 1:
         raise ValueError("overlap must lie in [0, 1)")
     g = terrain.grid

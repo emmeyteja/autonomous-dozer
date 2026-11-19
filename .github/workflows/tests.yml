@@ -14,3 +14,4 @@ jobs:
       - run: python -m pip install -e '.[dev]'
       - run: python -m pytest -q
       - run: python -m autonomous_dozer --profile configs/komatsu_d61ex24_eu_stage_v.json --output outputs/ci
+      - run: python -m autonomous_dozer.observation_cli --output outputs/ci-observation

@@ -17,7 +17,7 @@ Read the [project brief](docs/project-brief.pdf) for the proposed architecture, 
 
 The first CPU simulation baseline is implemented: synthetic pile generation, a deterministic layer/lane material planner, capacity-limited transfers, repose relaxation, and replanning after each transfer. D61EX-24 and D61PX-24 profiles separate published dimensions from simulation assumptions.
 
-The demo uses perfect simulated terrain and prescribed blade heights. It does not yet include perception, tracked vehicle motion, validated fallback supervision, hydraulic control, or a real Trimble connection. See [model limits and architecture](docs/architecture.md).
+A separate [partial-observation simulator](docs/observations.md) now models occlusion, range/FOV, noise and dropout. The material-planning demo still uses perfect simulated terrain and prescribed blade heights. It does not yet include perception, tracked vehicle motion, validated fallback supervision, hydraulic control, or a real Trimble connection. See [model limits and architecture](docs/architecture.md).
 
 ## Run the baseline
 
@@ -58,3 +58,7 @@ The sequence remains the roadmap; only the initial material-simulation baseline 
 - Start with a small modular baseline and justify added complexity with requirements or measurements.
 
 These principles apply throughout development. See [development guidance](AGENTS.md).
+
+## Development tracking
+
+[GitHub milestones](https://github.com/emmeyteja/autonomous-dozer/milestones) and [issues](https://github.com/emmeyteja/autonomous-dozer/issues) are the canonical task outline, dependencies and acceptance criteria. Complete one issue at a time, record test evidence, and push tested commits directly to `main`. Pull requests are not part of the current development flow.

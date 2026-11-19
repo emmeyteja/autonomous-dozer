@@ -6,6 +6,7 @@
 - `terrain`: conical, stadium-ridge and reproducible multi-dump pile generators.
 - `planning`: deterministic next-pass selection from perfect simulated terrain. It selects the largest-volume lane at a top-down cut height, limits lane width to blade width and rejects unsupported geometry/push distance.
 - `simulation`: capacity-limited +x removal, uniform placement into a separate deposition area, and mass-conserving cardinal-neighbor repose relaxation with closed map boundaries.
+- `observations`: immutable partial scans, cell-top visibility and seeded noise/dropout. Measurement artifacts exclude hidden truth; the existing planner rejects observation inputs.
 - `profiles`: manufacturer dimensions and separate scenario assumptions.
 - `cli` and `visualization`: scenario orchestration, JSON/NPZ artifacts and optional plots. Domain algorithms do not depend on ROS, plotting or manufacturer APIs.
 
@@ -21,7 +22,7 @@ The cut height is prescribed for each simulated pass. This permits experimenting
 
 ## Next development gates
 
-1. Add visibility/noise and a pile estimator, keeping unknown terrain separate from simulation truth. Validate volume and hidden-side errors on held-out shapes.
+1. Visibility/noise is implemented separately from oracle planning. Next add a pile estimator, keeping unknown terrain separate from simulation truth. Validate volume and hidden-side errors on held-out shapes.
 2. Replace broad deposit placement with calibrated blade carrying/spreading rules. Add feasible disposal volume, slopes, blade approach and full vehicle swept-footprint checks.
 3. Add tracked kinematics, reverse tracking, speed/stop constraints and vehicle-specific adapters. Profile metadata is not yet a dynamics model.
 4. Add supervisor and command gate before learned-policy integration. Policy failure may select a valid deterministic candidate; shared sensing/localization/actuator failure must cause pause/stop and recovery.

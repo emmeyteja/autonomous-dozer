@@ -30,3 +30,30 @@ def plot_demo(initial, final, report, output: Path):
     fig.text(0.01, -0.025, "Source: reproducible synthetic scenario; perfect terrain observations, prescribed blade, no vehicle or hydraulic dynamics.", fontsize=9)
     fig.savefig(output, dpi=150, bbox_inches="tight")
     plt.close(fig)
+
+
+def plot_observation(truth, observation, output: Path):
+    """Truth is provided separately for diagnostics, never read by an estimator."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    b = truth.grid.bounds
+    extent = [b.xmin_m, b.xmax_m, b.ymin_m, b.ymax_m]
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.7), layout="constrained")
+    values = [truth.height_m, observation.height_m]
+    finite = observation.height_m[observation.observed]
+    vmin = min(0, float(finite.min())) if finite.size else 0
+    vmax = max(float(truth.height_m.max()), float(finite.max()) if finite.size else 0, 0.1)
+    cmap = plt.get_cmap("cividis").copy()
+    cmap.set_bad("lightgray")
+    for ax, height, title in zip(axes, values, ["Simulation truth (diagnostic only)", "Partial observation (gray = unknown)"]):
+        im = ax.imshow(height, origin="lower", extent=extent, cmap=cmap, vmin=vmin, vmax=vmax)
+        p = observation.sensor_pose
+        ax.plot(p.x_m, p.y_m, marker="x", color="tab:red", markersize=8, label="Sensor XY")
+        ax.set(title=title, xlabel="Site x (m)", ylabel="Site y (m)")
+        ax.legend(loc="upper left", fontsize=8)
+    fig.colorbar(im, ax=axes, label="Measured height above flat ground (m)", shrink=0.85)
+    fig.suptitle(f"Idealized grid visibility · {int(observation.observed.sum())}/{truth.height_m.size} observed cells", fontsize=12)
+    fig.text(0.01, -0.035, "Source: seeded synthetic scene; cell-top occlusion, vertical Gaussian noise and dropout. No sensor calibration or planner execution.", fontsize=8)
+    fig.savefig(output, dpi=150, bbox_inches="tight")
+    plt.close(fig)
