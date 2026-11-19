@@ -1,0 +1,34 @@
+{
+  "model": "Komatsu D61EX-24",
+  "configuration": "European Stage V, standard 3.4 m3 INPAT blade, hitch (not ripper)",
+  "source": {
+    "url": "https://www.komatsu.eu/Assets/GetBrochureByProductName.aspx?id=D61EX%2FPX-24&langID=en",
+    "document": "D61EX/PX-24 EU Stage V brochure",
+    "printed_page": 17,
+    "accessed": "2026-11-20"
+  },
+  "published_dimensions": {
+    "blade_width_m": 3.25,
+    "blade_face_height_m": 1.195,
+    "rated_blade_capacity_m3": 3.4,
+    "overall_length_with_blade_m": 5.55,
+    "body_width_m": 2.5,
+    "track_center_spacing_m": 1.9,
+    "shoe_width_m": 0.6,
+    "ground_contact_length_m": 3.165,
+    "cab_height_m": 3.175,
+    "operating_mass_kg": 18550
+  },
+  "simulation_assumptions": {
+    "effective_capacity_factor": 0.5,
+    "max_push_distance_m": 20.0,
+    "blade_authority": "prescribed_simulation_only",
+    "real_machine_blade_authority": "external_trimble_two_gnss_antennas"
+  },
+  "unknowns": [
+    "Cylinder stroke ranges, pin coordinates, linkage kinematics and compliance",
+    "Calibrated capacity versus cut depth, moisture, material and speed",
+    "Machine/site-specific slope, traction and stopping limits",
+    "Programmatic Trimble modes and design-surface interfaces"
+  ]
+}

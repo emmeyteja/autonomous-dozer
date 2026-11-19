@@ -15,9 +15,27 @@ Read the [project brief](docs/project-brief.pdf) for the proposed architecture, 
 
 ## Status
 
-Planning only. This repository currently contains the project brief and documentation; no simulator, estimator, planner, or vehicle-control implementation is included.
+The first CPU simulation baseline is implemented: synthetic pile generation, a deterministic layer/lane material planner, capacity-limited transfers, repose relaxation, and replanning after each transfer. D61EX-24 and D61PX-24 profiles separate published dimensions from simulation assumptions.
 
-The brief proposes treating real-world Trimble blade control as an external system. Blade face height and target elevation need separate definitions before implementation. Other unresolved choices include blade specifications, spreading versus moving material to a dump zone, sand properties, and acceptance criteria.
+The demo uses perfect simulated terrain and prescribed blade heights. It does not yet include perception, tracked vehicle motion, validated fallback supervision, hydraulic control, or a real Trimble connection. See [model limits and architecture](docs/architecture.md).
+
+## Run the baseline
+
+From the repository root:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e '.[dev,plots]'
+python -m pytest -q
+python -m autonomous_dozer --profile configs/komatsu_d61ex24_eu_stage_v.json --output outputs/d61-demo --plot
+```
+
+Choose a new output directory for every run. Use `--pile cone`, `--pile ridge`, or `--pile multi --seed 7`; use `--profile configs/komatsu_d61px24_eu_stage_v.json` to compare the PX variant. Plotting is optional; omit `--plot` and the `plots` extra for a NumPy-only runtime.
+
+Outputs include a versioned pass history and metrics in `report.json`, initial/final arrays in `terrain.npz`, and an optional `comparison.png`. This scenario moves excess into a separate deposit region; successful upper-excess removal is not proof of general grading or vehicle performance.
+
+See [manufacturer manuals, CAD access and dimension sources](docs/machine-references.md).
 
 ## Proposed implementation sequence
 
@@ -29,7 +47,7 @@ The brief proposes treating real-world Trimble blade control as an external syst
 6. Soil-simulation calibration and synthetic sensors.
 7. Optional path tracking and reinforcement-learning experiments.
 
-These are proposed milestones, not completed capabilities. Simulation results will require calibration and real-world validation before vehicle use.
+The sequence remains the roadmap; only the initial material-simulation baseline and a simple deterministic planner are implemented. Simulation results require calibration and real-world validation before vehicle use.
 
 ## Architecture principles
 
