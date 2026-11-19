@@ -176,3 +176,12 @@ def test_cli_writes_explicit_insufficient_data_report(tmp_path, monkeypatch):
     assert report["status"] == "insufficient_data"
     assert report["rescan_required"] and not report["planner_executed"]
     assert not (tmp_path/"output"/"estimate.npz").exists()
+
+
+
+def test_common_ground_uncertainty_is_not_averaged_away():
+    _, obs = scene(1.2)
+    result = fit_pile(obs, AREA, ground=GroundReference(std_m=0.04))
+    floor = result.diagnostics["common_ground_volume_std_floor_m3"]
+    assert floor > 0.5
+    assert result.diagnostics["conditional_local_volume_std_m3"] >= floor

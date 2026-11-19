@@ -256,6 +256,12 @@ def fit_pile(observation: Observation, work_area: Rect, *, ground=GroundReferenc
             plus, minus = p.copy(), p.copy(); plus[i] += delta; minus[i] -= delta
             gradient[i] = (_volume(plus)-_volume(minus))/(2*delta)
         local_std = float(math.sqrt(max(0, gradient@covariance@gradient)))
+    footprint_area = math.pi*p[2]**2+(4*p[4]*p[2] if len(p) == 6 else 0)
+    # Ground datum error is shared by every cell, not independent noise that
+    # vanishes with sample count. Retain a conservative common-mode sensitivity.
+    ground_volume_floor = float(footprint_area*ground.std_m)
+    if local_std is not None:
+        local_std = math.hypot(local_std, ground_volume_floor)
     plausible = [f for f in fits if f["score"] <= best["score"]+config.plausible_score_delta]
     volumes = [f["analytic_volume_m3"] for f in plausible]
     interval = [max(0, min(volumes)), max(volumes)]
@@ -292,6 +298,7 @@ def fit_pile(observation: Observation, work_area: Rect, *, ground=GroundReferenc
                    "analytic_volume_m3": _volume(p), "mass_residual_std": best["mass_z"],
                    "jacobian_rank": rank, "parameter_count": len(p),
                    "conditional_local_volume_std_m3": local_std,
+                   "common_ground_volume_std_floor_m3": ground_volume_floor,
                    "conditional_volume_interval_m3": interval,
                    "interval_method": "local_linear_1.96_sigma_plus_near_fit_envelope_not_calibrated",
                    "predicted_height_reference": "excess_above_supplied_flat_ground",
