@@ -19,3 +19,9 @@ checkpoints/
 .DS_Store
 .idea/
 .vscode/
+
+# Locally cached manufacturer material (not redistributed)
+.local/
+*.egg-info/
+build/
+dist/
