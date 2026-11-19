@@ -35,7 +35,7 @@ Choose a new output directory for every run. Use `--pile cone`, `--pile ridge`, 
 
 Outputs include a versioned pass history and metrics in `report.json`, initial/final arrays in `terrain.npz`, and an optional `comparison.png`. This scenario moves excess into a separate deposit region; successful upper-excess removal is not proof of general grading or vehicle performance.
 
-See [manufacturer manuals, CAD access and dimension sources](docs/machine-references.md).
+See [manufacturer manuals, CAD access and dimension sources](docs/machine-references.md) and the [estimator evaluation harness](docs/estimator-evaluation.md).
 
 ## Proposed implementation sequence
 

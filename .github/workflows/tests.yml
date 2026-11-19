@@ -16,3 +16,4 @@ jobs:
       - run: python -m autonomous_dozer --profile configs/komatsu_d61ex24_eu_stage_v.json --output outputs/ci
       - run: python -m autonomous_dozer.observation_cli --output outputs/ci-observation
       - run: python -m autonomous_dozer.estimation_cli --observation outputs/ci-observation --output outputs/ci-estimate --work-area -6 5 -5 5 --mass-kg 31800 --density-kg-m3 1500
+      - run: python -m autonomous_dozer.evaluation_cli --split heldout --output outputs/ci-evaluation
