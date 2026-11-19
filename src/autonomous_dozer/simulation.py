@@ -87,3 +87,7 @@ def apply_pass(terrain: Terrain, work_pass: WorkPass) -> Transfer:
     moved = float((terrain.height_m-h).sum()*grid.area_m2)
     h[deposit_mask] += moved/(np.count_nonzero(deposit_mask)*grid.area_m2)
     return Transfer(Terrain(grid, h, terrain.version+1), moved)
+
+
+# Explicit baseline name for comparisons with path-based transport.
+apply_uniform_transfer = apply_pass

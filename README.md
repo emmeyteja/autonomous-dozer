@@ -35,6 +35,8 @@ Choose a new output directory for every run. Use `--pile cone`, `--pile ridge`, 
 
 Outputs include a versioned pass history and metrics in `report.json`, initial/final arrays in `terrain.npz`, and an optional `comparison.png`. This scenario moves excess into a separate deposit region; successful upper-excess removal is not proof of general grading or vehicle performance.
 
+The [blade transport demo](docs/blade-transport.md) adds carried load, local bounded release, shoulder shedding and explicit fill/finish objectives. It is separate from the old oracle planning loop. Held-out estimator evaluation currently fails its quality gate, so estimation has not been promoted into planning.
+
 See [manufacturer manuals, CAD access and dimension sources](docs/machine-references.md) and the [estimator evaluation harness](docs/estimator-evaluation.md).
 
 ## Proposed implementation sequence
@@ -47,7 +49,7 @@ See [manufacturer manuals, CAD access and dimension sources](docs/machine-refere
 6. Soil-simulation calibration and synthetic sensors.
 7. Optional path tracking and reinforcement-learning experiments.
 
-The sequence remains the roadmap; only the initial material-simulation baseline and a simple deterministic planner are implemented. Simulation results require calibration and real-world validation before vehicle use.
+The sequence remains the roadmap; partial observations, cone/ridge estimation, held-out evaluation and a path-based heightmap transport model are also implemented. A closed observation-driven planning/execution loop remains planned. Simulation results require calibration and real-world validation before vehicle use.
 
 ## Architecture principles
 
