@@ -17,7 +17,7 @@ Read the [project brief](docs/project-brief.pdf) for the proposed architecture, 
 
 The first CPU simulation baseline is implemented: synthetic pile generation, a deterministic layer/lane material planner, capacity-limited transfers, repose relaxation, and replanning after each transfer. D61EX-24 and D61PX-24 profiles separate published dimensions from simulation assumptions.
 
-A separate [partial-observation simulator](docs/observations.md) now models occlusion, range/FOV, noise and dropout. The material-planning demo still uses perfect simulated terrain and prescribed blade heights. It does not yet include perception, tracked vehicle motion, validated fallback supervision, hydraulic control, or a real Trimble connection. See [model limits and architecture](docs/architecture.md).
+A separate [partial-observation simulator](docs/observations.md) now models occlusion, range/FOV, noise and dropout. The material-planning demo still uses perfect simulated terrain and prescribed blade heights. A [cone/ridge pile estimator](docs/pile-estimation.md) can now fit saved partial observations with optional mass/density priors and explicit rescan gates. Tracked vehicle motion, validated fallback supervision, hydraulic control and a real Trimble connection are not implemented. See [model limits and architecture](docs/architecture.md).
 
 ## Run the baseline
 

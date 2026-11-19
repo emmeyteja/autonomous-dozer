@@ -57,3 +57,28 @@ def plot_observation(truth, observation, output: Path):
     fig.text(0.01, -0.035, "Source: seeded synthetic scene; cell-top occlusion, vertical Gaussian noise and dropout. No sensor calibration or planner execution.", fontsize=8)
     fig.savefig(output, dpi=150, bbox_inches="tight")
     plt.close(fig)
+
+
+def plot_estimate(observation, estimate, ground_elevation_m, output: Path):
+    """Plot measured versus inferred excess heights without simulation truth."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import numpy as np
+    b = observation.grid.bounds
+    extent = [b.xmin_m, b.xmax_m, b.ymin_m, b.ymax_m]
+    measured = observation.height_m-ground_elevation_m
+    predicted = estimate.predicted_height_m
+    vmax = max(float(np.nanmax(measured)), float(predicted.max()), 0.1)
+    cmap = plt.get_cmap("cividis").copy(); cmap.set_bad("lightgray")
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.7), layout="constrained")
+    for ax, h, title in zip(axes, [measured, predicted],
+                            ["Measurements (gray = unknown)", f"{estimate.selected_model} model prediction (not measurements)"]):
+        im = ax.imshow(h, extent=extent, origin="lower", vmin=0, vmax=vmax, cmap=cmap)
+        ax.set(title=title, xlabel="Site x (m)", ylabel="Site y (m)")
+    fig.colorbar(im, ax=axes, label="Height above supplied ground (m)", shrink=0.8)
+    d = estimate.diagnostics
+    fig.suptitle(f"{estimate.status} · total {d['total_volume_m3']:.2f} m³ · hidden {d['hidden_volume_m3']:.2f} m³", fontsize=12)
+    fig.text(0.01, -0.035, "Source: saved partial scan only. Parametric inference; uncertainty diagnostics are conditional and not calibrated confidence bounds.", fontsize=8)
+    fig.savefig(output, dpi=150, bbox_inches="tight")
+    plt.close(fig)
